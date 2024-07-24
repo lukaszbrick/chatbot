@@ -31,5 +31,14 @@ else:
     print("Zmienna OPENAI_API_KEY nie jest ustawiona.")
 
 
+# Sidebar
+st.sidebar.header(_("About"))
+st.sidebar.markdown(_(
+    "LllamaIndex eperiment"
+))
+st.sidebar.button('Click me'):
 
-st.write(secret_name)
+# Main content
+with st.expander(_("Moreinfo")):
+    st.write(secret_name)
+
