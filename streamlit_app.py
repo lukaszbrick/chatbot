@@ -35,7 +35,7 @@ else:
 st.session_state.clicked = False
     
 def click_button():
-    st.session_state.clicked = not st.session_state.button
+    st.session_state.clicked = not st.session_state.clicked
 
 
 # Sidebar
