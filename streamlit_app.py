@@ -17,13 +17,8 @@ st.header("Experiment #0.1 💬 📚")
 
 
 
-#Ustalenie klucza OpenAI API z secret manager
-# zakładając że do operacji llm i osadzeń wykorzystamy modele OpenAI
-# !pip install google-cloud-secret-manager --quiet
-#project_id = 'your-project-id'
-
 client = secretmanager.SecretManagerServiceClient()
-secret_name = f"projects/775653255059/secrets/OpeanAI_API_key/versions/1"
+secret_name = st.secrets["API_KEY"])
 response = client.access_secret_version(request={"name": secret_name})
 secret_value = response.payload.data.decode('UTF-8')
 os.environ['OPENAI_API_KEY'] = secret_value
