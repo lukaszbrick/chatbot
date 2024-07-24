@@ -25,14 +25,17 @@ secret_name = st.secrets["API_KEY"]
 
 
 api_key = os.getenv('OPENAI_API_KEY')
+
+
 if api_key:
     print("Zmienna OPENAI_API_KEY jest ustawiona.")
 else:
     print("Zmienna OPENAI_API_KEY nie jest ustawiona.")
 
-
+st.session_state.clicked = False
+    
 def click_button():
-    st.session_state.button = not st.session_state.button
+    st.session_state.clicked = not st.session_state.button
 
 
 # Sidebar
@@ -43,10 +46,9 @@ st.sidebar.markdown(
 
 st.sidebar.button('Click me', on_click=click_button)
 
-if st.session_state.button:
+if st.session_state.clicked:
     # The message and nested widget will remain on the page
     st.sidebar.write('Button is on!')
-   
 else:
     st.sidebar.write('Button is off!')
 
@@ -54,4 +56,6 @@ else:
 # Main content
 with st.expander("Moreinfo"):
     st.write(secret_name)
+
+
 
