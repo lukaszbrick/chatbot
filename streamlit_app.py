@@ -14,9 +14,6 @@ import nest_asyncio
 
 st.header("Experiment #0.1 💬 📚")
 
-
-
-
 #client = secretmanager.SecretManagerServiceClient()
 secret_name = st.secrets["API_KEY"]
 #response = client.access_secret_version(request={"name": secret_name})
@@ -32,7 +29,10 @@ if api_key:
 else:
     print("Zmienna OPENAI_API_KEY nie jest ustawiona.")
 
-st.session_state.clicked = False
+
+if 'clicked' not in st.session_state:
+    st.session_state.clicked = False
+
     
 def click_button():
     st.session_state.clicked = not st.session_state.clicked
