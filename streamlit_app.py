@@ -36,19 +36,19 @@ def click_button():
 
 
 # Sidebar
-st.sidebar.header(_("About"))
-st.sidebar.markdown(_(
+st.sidebar.header("About")
+st.sidebar.markdown(
     "LllamaIndex eperiment"
-))
+)
 
 st.sidebar.button('Click me', on_click=click_button)
 
-if st.session_state.button:
-    # The message and nested widget will remain on the page
-    st.sidebar.write('Button is on!')
+# if st.session_state.button:
+#     # The message and nested widget will remain on the page
+#     st.sidebar.write('Button is on!')
    
-else:
-    st.sidebar.write('Button is off!')
+# else:
+#     st.sidebar.write('Button is off!')
 
 
 # Main content
