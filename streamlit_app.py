@@ -31,12 +31,25 @@ else:
     print("Zmienna OPENAI_API_KEY nie jest ustawiona.")
 
 
+def click_button():
+    st.session_state.button = not st.session_state.button
+
+
 # Sidebar
 st.sidebar.header(_("About"))
 st.sidebar.markdown(_(
     "LllamaIndex eperiment"
 ))
-st.sidebar.button('Click me'):
+
+st.sidebar.button('Click me', on_click=click_button)
+
+if st.session_state.button:
+    # The message and nested widget will remain on the page
+    st.sidebar.write('Button is on!')
+   
+else:
+    st.sidebar.write('Button is off!')
+
 
 # Main content
 with st.expander(_("Moreinfo")):
