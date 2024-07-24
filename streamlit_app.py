@@ -17,13 +17,14 @@ st.header("Experiment #0.1 💬 📚")
 
 
 
-client = secretmanager.SecretManagerServiceClient()
+#client = secretmanager.SecretManagerServiceClient()
 secret_name = st.secrets["API_KEY"]
-response = client.access_secret_version(request={"name": secret_name})
-secret_value = response.payload.data.decode('UTF-8')
-os.environ['OPENAI_API_KEY'] = secret_value
+#response = client.access_secret_version(request={"name": secret_name})
+#secret_value = response.payload.data.decode('UTF-8')
+#os.environ['OPENAI_API_KEY'] = secret_value
 
-api_key = os.getenv('OPENAI_API_KEY')
+print(secret_name)
+#api_key = os.getenv('OPENAI_API_KEY')
 if api_key:
     print("Zmienna OPENAI_API_KEY jest ustawiona.")
 else:
