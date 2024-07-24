@@ -43,15 +43,15 @@ st.sidebar.markdown(
 
 st.sidebar.button('Click me', on_click=click_button)
 
-# if st.session_state.button:
-#     # The message and nested widget will remain on the page
-#     st.sidebar.write('Button is on!')
+if st.session_state.button:
+    # The message and nested widget will remain on the page
+    st.sidebar.write('Button is on!')
    
-# else:
-#     st.sidebar.write('Button is off!')
+else:
+    st.sidebar.write('Button is off!')
 
 
 # Main content
-with st.expander(_("Moreinfo")):
+with st.expander("Moreinfo"):
     st.write(secret_name)
 
