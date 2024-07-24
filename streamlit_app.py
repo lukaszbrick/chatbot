@@ -24,7 +24,7 @@ secret_name = st.secrets["API_KEY"]
 #os.environ['OPENAI_API_KEY'] = secret_value
 
 print(secret_name)
-#api_key = os.getenv('OPENAI_API_KEY')
+api_key = os.getenv('OPENAI_API_KEY')
 if api_key:
     print("Zmienna OPENAI_API_KEY jest ustawiona.")
 else:
