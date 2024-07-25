@@ -16,7 +16,7 @@ import nest_asyncio
 ################################
 
 os.environ['OPENAI_API_KEY'] = st.secrets["API_KEY"]
-api_key = os.getenv('OPENAI_API_KEY')
+openai_api_key = os.getenv('OPENAI_API_KEY')
 llm = OpenAI(model="gpt-3.5-turbo")
 
 ###################################
@@ -47,12 +47,20 @@ tools = [multiply_tool, add_tool]
 agent = OpenAIAgent.from_tools(tools, llm=llm, verbose=True)
 
 
+
+#### Chatbot config
+if "messages" not in st.session_state:
+    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+
+for msg in st.session_state.messages:
+    st.chat_message(msg["role"]).write(msg["content"])
+
+
 #############################
 ########### GUI #############
 #############################
 
 st.header("Experiment #0.1 💬 📚")
-
 
 if 'clicked' not in st.session_state:
     st.session_state.clicked = False
@@ -62,7 +70,7 @@ if 'sample_math' not in st.session_state:
 
 
 ######## Sidebar
-st.sidebar.header("About")
+st.sidebar.header("Tests")
 st.sidebar.markdown(
     "LllamaIndex eperiment"
 )
@@ -71,12 +79,26 @@ st.sidebar.button('Say HI!', on_click=say_hi)
 
 st.sidebar.button('Show Math skills', on_click=do_simple_math)
 
+#
+st.sidebar.header("💬 Chatbot")
+if prompt := st.sidebar.chat_input():
+  if not openai_api_key:
+      st.info("Please add your OpenAI API key to continue.")
+      st.stop()
+
+  client = OpenAI(api_key=openai_api_key)
+  st.session_state.messages.append({"role": "user", "content": prompt})
+  st.chat_message("user").write(prompt)
+  response = client.chat.completions.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
+  msg = response.choices[0].message.content
+  st.session_state.messages.append({"role": "assistant", "content": msg})
+  st.chat_message("assistant").write(msg)
 
 ###### Main content
 # Write Results
 with st.expander("Moreinfo"):
     st.write('lorem ipsum')
-    if api_key:
+    if openai_api_key:
         st.write("Zmienna OPENAI_API_KEY jest ustawiona.")
     else:
         st.write("Zmienna OPENAI_API_KEY nie jest ustawiona.")
