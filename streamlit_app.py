@@ -81,7 +81,18 @@ st.sidebar.button('Show Math skills', on_click=do_simple_math)
 
 #
 st.sidebar.header("💬 Chatbot")
-if prompt := st.sidebar.chat_input():
+if prompt := st.sidebar.chat_input("What is up?"):
+    # Display user message in chat message container
+    st.chat_message("user").markdown(prompt)
+    # Add user message to chat history
+    st.session_state.messages.append({"role": "user", "content": prompt})
+
+    response = f"Echo: {prompt}"
+    # Display assistant response in chat message container
+    with st.chat_message("assistant"):
+        st.markdown(response)
+    # Add assistant response to chat history
+    st.session_state.messages.append({"role": "assistant", "content": response})
   if not openai_api_key:
       st.info("Please add your OpenAI API key to continue.")
       st.stop()
@@ -104,10 +115,6 @@ if st.session_state.sample_math:
     st.write(">>> Do math: ", str(agent.chat("What is (121 * 3) + 42?")))
 
 
-client = OpenAI(api_key=openai_api_key)
-st.session_state.messages.append({"role": "user", "content": prompt})
-st.chat_message("user").write(prompt)
-response = client.chat.completions.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
-msg = response.choices[0].message.content
-st.session_state.messages.append({"role": "assistant", "content": msg})
+
+
 st.chat_message("assistant").write(msg)
