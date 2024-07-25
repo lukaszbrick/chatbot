@@ -23,8 +23,11 @@ llm = OpenAI(model="gpt-3.5-turbo")
 ########### FUNCTIONS #############
 ###################################
     
-def click_button():
+def say_hi():
     st.session_state.clicked = not st.session_state.clicked
+
+def do_simple_math():
+    st.session_state.sample_math = True
 
 def multiply(a: int, b: int) -> int:
     """Multiple two integers and returns the result integer"""
@@ -38,7 +41,6 @@ def add(a: int, b: int) -> int:
 multiply_tool = FunctionTool.from_defaults(fn=multiply)
 add_tool = FunctionTool.from_defaults(fn=add)
 tools = [multiply_tool, add_tool]
-
 
 
 ######## Bootstraping agent
@@ -60,6 +62,9 @@ st.header("Experiment #0.1 💬 📚")
 if 'clicked' not in st.session_state:
     st.session_state.clicked = False
 
+if 'sample_math' not in st.session_state:
+    st.session_state.sample_math = False
+
 
 ######## Sidebar
 st.sidebar.header("About")
@@ -67,13 +72,14 @@ st.sidebar.markdown(
     "LllamaIndex eperiment"
 )
 
-st.sidebar.button('Click me', on_click=click_button)
+st.sidebar.button('Say HI!', on_click=say_hi)
+
+st.sidebar.button('Show Math skills', on_click=say_hi)
 
 if st.session_state.clicked:
     # The message and nested widget will remain on the page
     st.sidebar.write('Button is on!')
-else:
-    st.sidebar.write('Button is off!')
+
 
 
 ###### Main content
@@ -83,7 +89,8 @@ with st.expander("Moreinfo"):
 
 
 
+if st.session_state.clicked:
+    st.write(">>> Response from agent:", str(agent.chat("Hi")))
 
-st.write(">>> Response from agent:", str(agent.chat("Hi")))
-
-st.write(">>> Do math: ", str(agent.chat("What is (121 * 3) + 42?")))
+if st.session_state.sample_math:
+    st.write(">>> Do math: ", str(agent.chat("What is (121 * 3) + 42?")))
