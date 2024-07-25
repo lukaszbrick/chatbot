@@ -84,4 +84,4 @@ with st.expander("Moreinfo"):
 
 
 response = agent.chat("Hi")
-st.write(str(response))
+st.write("response from agent:", str(response))
