@@ -24,7 +24,7 @@ llm = OpenAI(model="gpt-3.5-turbo")
 ###################################
     
 def say_hi():
-    st.session_state.clicked = not st.session_state.clicked
+    st.session_state.clicked = True
 
 def do_simple_math():
     st.session_state.sample_math = True
@@ -51,13 +51,8 @@ agent = OpenAIAgent.from_tools(tools, llm=llm, verbose=True)
 ########### GUI #############
 #############################
 
-if api_key:
-    st.write("Zmienna OPENAI_API_KEY jest ustawiona.")
-else:
-    st.write("Zmienna OPENAI_API_KEY nie jest ustawiona.")
-
-
 st.header("Experiment #0.1 💬 📚")
+
 
 if 'clicked' not in st.session_state:
     st.session_state.clicked = False
@@ -81,7 +76,10 @@ st.sidebar.button('Show Math skills', on_click=do_simple_math)
 # Write Results
 with st.expander("Moreinfo"):
     st.write('lorem ipsum')
-
+    if api_key:
+        st.write("Zmienna OPENAI_API_KEY jest ustawiona.")
+    else:
+        st.write("Zmienna OPENAI_API_KEY nie jest ustawiona.")
 
 if st.session_state.clicked:
     st.write(">>> Response from agent:", str(agent.chat("Hi")))
