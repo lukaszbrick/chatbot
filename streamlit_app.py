@@ -1,6 +1,10 @@
 from openai import OpenAI
 import streamlit as st
 
+from llama_index.core.tools import BaseTool, FunctionTool
+
+
+
 openai_api_key = st.secrets["API_KEY"]
 
 ###################################
