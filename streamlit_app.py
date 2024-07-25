@@ -1,44 +1,67 @@
 import streamlit as st
 import json
 from typing import Sequence, List
-
 from llama_index.llms.openai import OpenAI
 from llama_index.core.llms import ChatMessage
 from llama_index.core.tools import BaseTool, FunctionTool
-from google.cloud import secretmanager
+from llama_index.core.agent import AgentRunner
+from llama_index.agent.openai import OpenAIAgentWorker, OpenAIAgent
 
 import os
 import openai
-
 import nest_asyncio
 
-st.header("Experiment #0.1 💬 📚")
+################################
+########### CONFIG #############
+################################
 
-#client = secretmanager.SecretManagerServiceClient()
-secret_name = st.secrets["API_KEY"]
-#response = client.access_secret_version(request={"name": secret_name})
-#secret_value = response.payload.data.decode('UTF-8')
-#os.environ['OPENAI_API_KEY'] = secret_value
-
-
+os.environ['OPENAI_API_KEY'] = st.secrets["API_KEY"]
 api_key = os.getenv('OPENAI_API_KEY')
+llm = OpenAI(model="gpt-3.5-turbo")
 
-
-if api_key:
-    print("Zmienna OPENAI_API_KEY jest ustawiona.")
-else:
-    print("Zmienna OPENAI_API_KEY nie jest ustawiona.")
-
-
-if 'clicked' not in st.session_state:
-    st.session_state.clicked = False
-
+###################################
+########### FUNCTIONS #############
+###################################
     
 def click_button():
     st.session_state.clicked = not st.session_state.clicked
 
+def multiply(a: int, b: int) -> int:
+    """Multiple two integers and returns the result integer"""
+    return a * b
 
-# Sidebar
+def add(a: int, b: int) -> int:
+    """Add two integers and returns the result integer"""
+    return a + b
+
+
+multiply_tool = FunctionTool.from_defaults(fn=multiply)
+add_tool = FunctionTool.from_defaults(fn=add)
+tools = [multiply_tool, add_tool]
+
+
+
+######## Bootstraping agent
+agent = OpenAIAgent.from_tools(tools, llm=llm, verbose=True)
+
+
+#############################
+########### GUI #############
+#############################
+
+if api_key:
+    st.write("Zmienna OPENAI_API_KEY jest ustawiona.")
+else:
+    st.write("Zmienna OPENAI_API_KEY nie jest ustawiona.")
+
+
+st.header("Experiment #0.1 💬 📚")
+
+if 'clicked' not in st.session_state:
+    st.session_state.clicked = False
+
+
+######## Sidebar
 st.sidebar.header("About")
 st.sidebar.markdown(
     "LllamaIndex eperiment"
@@ -53,9 +76,12 @@ else:
     st.sidebar.write('Button is off!')
 
 
-# Main content
+###### Main content
+# TESTS 
 with st.expander("Moreinfo"):
-    st.write(secret_name)
+    st.write('lorem ipsum')
 
 
 
+response = agent.chat("Hi")
+st.write(str(response))
