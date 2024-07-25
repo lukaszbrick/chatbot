@@ -101,7 +101,6 @@ if prompt := st.chat_input():
     response = agent.chat(prompt)
     st.chat_message('assistant').write(str(response))
 
-
     
-    #st.session_state.messages.append({"role": "assistant", "content": str(response)})
+    st.session_state.messages.append({"role": "assistant", "content": str(response)})
 
