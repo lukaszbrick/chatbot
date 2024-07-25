@@ -21,7 +21,11 @@ def add(a: int, b: int) -> int:
     """Add two integers and returns the result integer"""
     return a + b
 
+if 'clicked' not in st.session_state:
+    st.session_state.clicked = False
 
+if 'sample_math' not in st.session_state:
+    st.session_state.sample_math = False
 
 ######## Sidebar
 with st.sidebar:
