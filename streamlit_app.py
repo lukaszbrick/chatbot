@@ -74,19 +74,13 @@ st.sidebar.markdown(
 
 st.sidebar.button('Say HI!', on_click=say_hi)
 
-st.sidebar.button('Show Math skills', on_click=say_hi)
-
-if st.session_state.clicked:
-    # The message and nested widget will remain on the page
-    st.sidebar.write('Button is on!')
-
+st.sidebar.button('Show Math skills', on_click=do_simple_math)
 
 
 ###### Main content
-# TESTS 
+# Write Results
 with st.expander("Moreinfo"):
     st.write('lorem ipsum')
-
 
 
 if st.session_state.clicked:
