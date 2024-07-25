@@ -8,9 +8,15 @@ from llama_index.core.tools import BaseTool, FunctionTool
 from llama_index.core.agent import AgentRunner
 from llama_index.agent.openai import OpenAIAgentWorker, OpenAIAgent
 
-
+import openai
 
 openai_api_key = st.secrets["API_KEY"]
+
+
+
+openai.api_key = openai_api_key
+
+
 
 ###################################
 ########### FUNCTIONS #############
