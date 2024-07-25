@@ -99,6 +99,8 @@ if st.session_state.sample_math:
     st.write(">>> Do math: ", str(agent.chat("What is (121 * 3) + 42?")))
 
 
+client = OpenAI(api_key=st.secrets["API_KEY"])
+
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
 
