@@ -80,7 +80,7 @@ if st.session_state.sample_math:
 #### Chat ####
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
-e
+
 for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write(msg["content"])
 
