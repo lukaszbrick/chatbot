@@ -21,6 +21,16 @@ def add(a: int, b: int) -> int:
     """Add two integers and returns the result integer"""
     return a + b
 
+
+multiply_tool = FunctionTool.from_defaults(fn=multiply)
+add_tool = FunctionTool.from_defaults(fn=add)
+tools = [multiply_tool, add_tool]
+
+
+######## Bootstraping agent
+llm = OpenAI(model="gpt-3.5-turbo")
+agent = OpenAIAgent.from_tools(tools, llm=llm, verbose=True)
+
 if 'clicked' not in st.session_state:
     st.session_state.clicked = False
 
