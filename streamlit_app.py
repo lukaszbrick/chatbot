@@ -95,10 +95,13 @@ if prompt := st.chat_input():
         st.info("Please add your OpenAI API key to continue.")
         st.stop()
 
-    #client = OpenAI(api_key=openai_api_key)
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.chat_message("user").write(prompt)
+    
     response = agent.chat(prompt)
     st.chat_message('assistant').write(str(response))
-    st.session_state.messages.append({"role": "assistant", "content": response})
-    st.chat_message('assistant').write("next command")
+
+
+    
+    st.session_state.messages.append({"role": "assistant", "content": str(response.response_gen)})
+
