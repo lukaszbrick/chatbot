@@ -83,5 +83,7 @@ with st.expander("Moreinfo"):
 
 
 
-response = agent.chat("Hi")
-st.write("response from agent:", str(response))
+
+st.write(">>> Response from agent:", str(agent.chat("Hi")))
+
+st.write(">>> Do math: ", str(agent.chat("What is (121 * 3) + 42?")))
